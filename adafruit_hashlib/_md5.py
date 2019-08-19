@@ -1,6 +1,7 @@
+
 # The MIT License (MIT)
 #
-# Copyright (c) 2019 Brent Rubell for Adafruit Industries
+# Brent Rubell for Adafruit Industries, 2019
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,34 +21,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`adafruit_hashlib`
-================================================================================
-
-Secure hashes and message digests
-
-
+`_md5.py`
+======================================================
+MD5 Hash Algorithm.
 * Author(s): Brent Rubell
-
-Implementation Notes
---------------------
-
-**Hardware:**
-
-.. todo:: Add links to any specific hardware product page(s), or category page(s). Use unordered list & hyperlink rST
-   inline format: "* `Link Text <url>`_"
-
-**Software and Dependencies:**
-
-* Adafruit CircuitPython firmware for the supported boards:
-  https://github.com/adafruit/circuitpython/releases
-
-.. todo:: Uncomment or remove the Bus Device and/or the Register library dependencies based on the library's use of either.
-
-# * Adafruit's Bus Device library: https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
-# * Adafruit's Register library: https://github.com/adafruit/Adafruit_CircuitPython_Register
 """
-
-# imports
-
-__version__ = "0.0.0-auto.0"
-__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_hashlib.git"
+class md5(object):
+    def __init__(self, s=None):
+        raise NotImplementedError("MD5 digests not currently implemented in this module.")
