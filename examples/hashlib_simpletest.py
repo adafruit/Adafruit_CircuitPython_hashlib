@@ -12,7 +12,7 @@ m.update(byte_string)
 # Obtain the digest, digest size, and block size
 print(
     "Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
-        m.hexdigest(), m.digest_size, m.block_size))
+    m.hexdigest(), m.digest_size, m.block_size))
 # Validate the digest
 assert (
     m.hexdigest() == "744535a10879be6b18bbcdd135032891346f530a7845d580f7869f36"
@@ -25,7 +25,7 @@ m = hashlib.sha256()
 m.update(byte_string)
 # Obtain the digest, digest size, and block size
 print("Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
-        m.hexdigest(), m.digest_size, m.block_size))
+    m.hexdigest(), m.digest_size, m.block_size))
 # Validate the digest
 assert (
     m.hexdigest() == "3ce8334ca39e66afb9c37d571da4caad68ab4a8bcbd6d584f75e4268e36c0954"
@@ -51,7 +51,7 @@ m = hashlib.sha512()
 m.update(byte_string)
 # Obtain the digest, digest size, and block size
 print("Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
-        m.hexdigest(), m.digest_size, m.block_size))
+    m.hexdigest(), m.digest_size, m.block_size))
 # Validate the digest
 assert (
     m.hexdigest() == "20a88a9b04aa490e457f8980e57331bc85c4d6ca30735a9e502f817e74011a9ece07078e53adf70c232ac91f6c79d4cd6cc69426cd77535645fe9016a71122c2"
