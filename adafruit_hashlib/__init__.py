@@ -42,16 +42,14 @@ Implementation Notes
 try:
     import hashlib
 except ImportError:
-    hashlib = None
+    from adafruit_hashlib._sha256 import sha224, sha256
+    from adafruit_hashlib._sha512 import sha384, sha512
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_hashlib.git"
 
 # FIPS secure hash algorithms supported by this library
 ALGOS_AVAIL = ["sha1", "MD5", "sha224", "sha256", "sha384", "sha512"]
-
-from adafruit_hashlib._sha256 import sha224, sha256
-from adafruit_hashlib._sha512 import sha384, sha512
 
 def new(algo, data=b""):
     """Creates a new hashlib object.
