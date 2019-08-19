@@ -1,6 +1,8 @@
 The MIT License (MIT)
 
-Copyright (c) 2019 Brent Rubell for Adafruit Industries
+sha256.c by Tom St Denis (https://opensource.apple.com/source/CommonCrypto/CommonCrypto-55010/Source/libtomcrypt/src/hashes/sha2/sha256.c.auto.html)
+Copyright (c) 2017 Paul Sokolovsky
+Modified by Brent Rubell for Adafruit Industries, 2019
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
