@@ -48,7 +48,7 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_hashlib.git"
 
 # FIPS secure hash algorithms supported by this library
-ALGOS_AVAIL = ["md5", "sha224", "sha256", "sha384", "sha512"]
+ALGOS_AVAIL = ["sha1", "md5", "sha224", "sha256", "sha384", "sha512"]
 
 def init():
     for i in ALGOS_AVAIL:

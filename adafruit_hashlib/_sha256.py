@@ -34,7 +34,6 @@ SHA_DIGESTSIZE = 32
 
 def new_shaobject():
     """Struct. for storing SHA information."""
-    # TODO: Why isn't digest just digest[8]
     return {
         'digest': [0]*8,
         'count_lo': 0,
