@@ -13,7 +13,14 @@ Introduction
     :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_hashlib
     :alt: Build Status
 
-Secure hashes and message digests
+This module implements a common interface to many different secure hash and message digest algorithms. 
+Included are the FIPS secure hash algorithms SHA1, SHA224, SHA256, SHA384, and SHA512 (defined in FIPS 180-2)
+as well as RSA’s MD5 algorithm (defined in Internet RFC 1321).
+
+SHA1 and MD5 algorithms are not supported by the CircuitPython module.
+
+
+`This library is based on the work performed in the micropython-lib hashlib module by Paul Sokolovsky <https://github.com/micropython/micropython-lib/tree/master/hashlib>`_
 
 
 Dependencies
@@ -30,9 +37,6 @@ Installing from PyPI
 =====================
 .. note:: This library is not available on PyPI yet. Install documentation is included
    as a standard element. Stay tuned for PyPI availability!
-
-.. todo:: Remove the above note if PyPI version is/will be available at time of release.
-   If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
 
 On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
 PyPI <https://pypi.org/project/adafruit-circuitpython-hashlib/>`_. To install for current user:
@@ -59,7 +63,13 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the examples folder and be included in docs/examples.rst.
+.. code-block:: python
+
+        import adafruit_hashlib as hashlib
+        m = hashlib.sha256()
+        m.update(b"CircuitPython")
+        print("Msg Hex Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
+                m.hexdigest(), m.digest_size, m.block_size))
 
 Contributing
 ============

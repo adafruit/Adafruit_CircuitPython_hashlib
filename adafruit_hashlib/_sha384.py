@@ -26,4 +26,5 @@
 SHA-384 Hash Algorithm
 * Author(s): Paul Sokolovsky, Brent Rubell
 """
+# pylint: disable=unused-import
 from ._sha512 import sha384
