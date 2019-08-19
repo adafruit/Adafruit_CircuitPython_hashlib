@@ -51,7 +51,7 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_hashlib.git"
 
 # FIPS secure hash algorithms supported by this library
-ALGOS_AVAIL = ["sha1", "MD5", "sha224", "sha256", "sha384", "sha512"]
+ALGOS_AVAIL = ["sha1", "md5", "sha224", "sha256", "sha384", "sha512"]
 
 def new(algo, data=b""):
     """Creates a new hashlib object.
