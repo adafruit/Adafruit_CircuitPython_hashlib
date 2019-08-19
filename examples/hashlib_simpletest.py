@@ -11,8 +11,8 @@ m = hashlib.sha224()
 m.update(byte_string)
 # Obtain the digest, digest size, and block size
 print(
-        "Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
-            m.hexdigest(), m.digest_size, m.block_size))
+    "Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
+        m.hexdigest(), m.digest_size, m.block_size))
 # Validate the digest
 assert (
     m.hexdigest() == "744535a10879be6b18bbcdd135032891346f530a7845d580f7869f36"
