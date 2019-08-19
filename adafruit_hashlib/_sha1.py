@@ -26,6 +26,8 @@
 SHA1 Hash Algorithm.
 * Author(s): Brent Rubell
 """
-class sha1(object):
+# pylint: disable=too-few-public-methods, invalid-name
+class sha1():
+    """SHA1 hash algorithm."""
     def __init__(self, s=None):
         raise NotImplementedError("SHA1 digests not currently implemented in this module.")
