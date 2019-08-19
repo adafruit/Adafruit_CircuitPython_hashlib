@@ -277,35 +277,52 @@ def sha_final(sha_info):
 class sha512(object):
     digest_size = digestsize = SHA_DIGESTSIZE
     block_size = SHA_BLOCKSIZE
+    name="sha512"
 
     def __init__(self, s=None):
+        """Constructs a SHA512 hash object.
+        """
         self._sha = sha_init()
         if s:
             sha_update(self._sha, getbuf(s))
 
     def update(self, s):
+        """Updates the hash object with a bytes-like object, s."""
         sha_update(self._sha, getbuf(s))
 
     def digest(self):
+        """Returns the digest of the data passed to the update()
+        method so far."""
         return sha_final(self._sha.copy())[:self._sha['digestsize']]
 
     def hexdigest(self):
+        """Like digest() except the digest is returned as a string object of
+        double length, containing only hexadecimal digits.
+        """
         return ''.join(['%.2x' % i for i in self.digest()])
 
     def copy(self):
+        """Return a copy (“clone”) of the hash object.
+        """
         new = sha512()
         new._sha = self._sha.copy()
         return new
 
+# pylint: disable=protected-access, super-init-not-called
 class sha384(sha512):
     digest_size = digestsize = 48
+    name="sha384"
 
     def __init__(self, s=None):
+        """Constructs a SHA224 hash object.
+        """
         self._sha = sha384_init()
         if s:
             sha_update(self._sha, getbuf(s))
 
     def copy(self):
+        """Return a copy (“clone”) of the hash object.
+        """
         new = sha384()
         new._sha = self._sha.copy()
         return new
