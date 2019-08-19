@@ -44,6 +44,8 @@ try:
 except ImportError:
     from adafruit_hashlib._sha256 import sha224, sha256
     from adafruit_hashlib._sha512 import sha384, sha512
+    from adafruit_hashlib._sha1 import sha1
+    from adafruit_hashlib._md5 import md5
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_hashlib.git"
