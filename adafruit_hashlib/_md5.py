@@ -26,8 +26,8 @@
 MD5 Hash Algorithm.
 * Author(s): Brent Rubell
 """
-# pylint: disable=too-few-public-methods
-class MD5():
+# pylint: disable=too-few-public-methods, invalid-name
+class md5():
     """RSA MD5 Algorithm class."""
     def __init__(self, s=None):
         raise NotImplementedError("MD5 digests not currently implemented in this module.")
