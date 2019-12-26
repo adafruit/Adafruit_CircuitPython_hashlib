@@ -4,7 +4,7 @@ import adafruit_hashlib as hashlib
 # Bytes-to-encode
 byte_string = b"CircuitPython"
 
-# Create a SHA-224 message
+# Create a SHA-1 message
 print("--SHA1--")
 m = hashlib.sha1()
 # Update the hash object with byte_string
