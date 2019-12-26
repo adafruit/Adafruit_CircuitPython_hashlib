@@ -36,11 +36,11 @@ import struct
 from io import BytesIO
 from micropython import const
 
-
+# SHA Block size and message digest sizes, in bytes.
 SHA_BLOCKSIZE = 64
 SHA_DIGESTSIZE = 20
 
-# initial hash value [5.3.1]
+# initial hash value [FIPS 5.3.1]
 K0 = const(0x5A827999)
 K1 = const(0x6ED9EBA1)
 K2 = const(0x8F1BBCDC)
@@ -48,7 +48,9 @@ K3 = const(0xCA62C1D6)
 
 def _getbuf(data):
     """Converts data into ascii,
-    returns bytes of data
+    returns bytes of data.
+    :param str bytes bytearray data: Data to convert.
+
     """
     if isinstance(data, str):
         return data.encode('ascii')
@@ -59,6 +61,7 @@ def _left_rotate(n, b):
     """Left rotate a 32-bit integer, n, by b bits.
     :param int n: 32-bit integer
     :param int b: Desired rotation amount, in bits.
+
     """
     return ((n << b) | (n >> (32 - b))) & 0xffffffff
 
@@ -68,8 +71,9 @@ def _hash_computation(chunk, h0, h1, h2, h3, h4):
     Per FIPS [6.1.2]
     :param bytes bytearray chunk: 64-bit bytearray
     :param list h_tuple: List of hash values for the chunk
+
     """
-    assert len(chunk) == 64, "Chunk should be 64-bits"
+    assert len(chunk) == 64, "Chunk size should be 64-bits"
 
     w = [0] * 80
 
@@ -126,7 +130,7 @@ class sha1():
     name = "sha1"
     def __init__(self):
         """Construct a SHA-1 hash object.
-
+        :param bytes data: data to process
         """
         # Initial Digest Variables
         self._h = (0x67452301,
@@ -135,7 +139,11 @@ class sha1():
                    0x10325476,
                    0xC3D2E1F0)
 
+        # bytes object with 0 <= len < 64 used to store the end of the message
+        # if the message length is not congruent to 64
         self._unprocessed = b''
+
+        # Length in bytes of all data that has been processed so far
         self._msg_byte_len = 0
 
     def _create_digest(self):
@@ -146,20 +154,18 @@ class sha1():
         message = self._unprocessed
         message_len = self._msg_byte_len + len(message)
 
-        # add trailing '1' bit (+ 0's padding) to string [§5.1.1]
+        # add trailing '1' bit (+ 0's padding) to string [FIPS 5.1.1]
         message += b'\x80'
 
         # append 0 <= k < 512 bits '0', so that the resulting message length (in bytes)
         # is congruent to 56 (mod 64)
         message += b'\x00' * ((56 - (message_len + 1) % 64) % 64)
 
-
         # append ml, the original message length, as a 64-bit big-endian integer.
         message_bit_length = message_len * 8
         message += struct.pack(b'>Q', message_bit_length)
 
         # Process the final chunk
-        # At this point, the length of the message is either 64 or 128 bytes.
         h = _hash_computation(message[:64], *self._h)
         if len(message) == 64:
             return h
@@ -173,7 +179,7 @@ class sha1():
         # if we get a string, convert to a bytearray objects
         data = _getbuf(data)
 
-        # switch input to bytesio api for easier reading
+        # Use BytesIO for stream-like reading
         if isinstance(data, (bytes, bytearray)):
             data = BytesIO(data)
 
@@ -182,6 +188,7 @@ class sha1():
 
         while len(chunk) == 64:
             self._h = _hash_computation(chunk, *self._h)
+            # increase the length of the message by 64 bytes
             self._msg_byte_len += 64
             # read the next 64 bytes
             chunk = data.read(64)
