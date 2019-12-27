@@ -128,9 +128,10 @@ class sha1():
     digest_size = SHA_DIGESTSIZE
     block_size = SHA_BLOCKSIZE
     name = "sha1"
-    def __init__(self):
+    def __init__(self, data=None):
         """Construct a SHA-1 hash object.
-        :param bytes data: data to process
+        :param bytes data: Optional data to process
+
         """
         # Initial Digest Variables
         self._h = (0x67452301,
@@ -145,6 +146,9 @@ class sha1():
 
         # Length in bytes of all data that has been processed so far
         self._msg_byte_len = 0
+
+        if data:
+            self.update(data)
 
     def _create_digest(self):
         """Returns finalized digest variables for the data processed so far.
