@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_hashlib.svg?branch=master
-    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_hashlib
+.. image:: https://github.com/adafruit/Adafruit_CircuitPython_hashlib/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_CircuitPython_hashlib/actions/
     :alt: Build Status
 
 This module implements a common interface to many different secure hash and message digest algorithms. 
