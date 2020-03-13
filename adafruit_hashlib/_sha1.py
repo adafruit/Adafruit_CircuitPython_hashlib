@@ -46,6 +46,7 @@ K1 = const(0x6ED9EBA1)
 K2 = const(0x8F1BBCDC)
 K3 = const(0xCA62C1D6)
 
+
 def _getbuf(data):
     """Converts data into ascii,
     returns bytes of data.
@@ -53,7 +54,7 @@ def _getbuf(data):
 
     """
     if isinstance(data, str):
-        return data.encode('ascii')
+        return data.encode("ascii")
     return bytes(data)
 
 
@@ -63,7 +64,8 @@ def _left_rotate(n, b):
     :param int b: Desired rotation amount, in bits.
 
     """
-    return ((n << b) | (n >> (32 - b))) & 0xffffffff
+    return ((n << b) | (n >> (32 - b))) & 0xFFFFFFFF
+
 
 # pylint: disable=invalid-name, too-many-arguments
 def _hash_computation(chunk, h0, h1, h2, h3, h4):
@@ -79,7 +81,7 @@ def _hash_computation(chunk, h0, h1, h2, h3, h4):
 
     # Break chunk into sixteen 4-byte big-endian words w[i]
     for i in range(16):
-        w[i] = struct.unpack(b'>I', chunk[i * 4:i * 4 + 4])[0]
+        w[i] = struct.unpack(b">I", chunk[i * 4 : i * 4 + 4])[0]
 
     # Extend the sixteen 4-byte words into eighty 4-byte words
     for i in range(16, 80):
@@ -107,42 +109,45 @@ def _hash_computation(chunk, h0, h1, h2, h3, h4):
             f = b ^ c ^ d
             k = K3
 
-        a, b, c, d, e = ((_left_rotate(a, 5) + f + e + k + w[i]) & 0xffffffff,
-                         a, _left_rotate(b, 30), c, d)
+        a, b, c, d, e = (
+            (_left_rotate(a, 5) + f + e + k + w[i]) & 0xFFFFFFFF,
+            a,
+            _left_rotate(b, 30),
+            c,
+            d,
+        )
 
     # Add to chunk's hash result so far
-    h0 = (h0 + a) & 0xffffffff
-    h1 = (h1 + b) & 0xffffffff
-    h2 = (h2 + c) & 0xffffffff
-    h3 = (h3 + d) & 0xffffffff
-    h4 = (h4 + e) & 0xffffffff
+    h0 = (h0 + a) & 0xFFFFFFFF
+    h1 = (h1 + b) & 0xFFFFFFFF
+    h2 = (h2 + c) & 0xFFFFFFFF
+    h3 = (h3 + d) & 0xFFFFFFFF
+    h4 = (h4 + e) & 0xFFFFFFFF
 
     return h0, h1, h2, h3, h4
 
 
 # pylint: disable=too-few-public-methods, invalid-name
-class sha1():
+class sha1:
     """SHA-1 Hash Object
 
     """
+
     digest_size = SHA_DIGESTSIZE
     block_size = SHA_BLOCKSIZE
     name = "sha1"
+
     def __init__(self, data=None):
         """Construct a SHA-1 hash object.
         :param bytes data: Optional data to process
 
         """
         # Initial Digest Variables
-        self._h = (0x67452301,
-                   0xEFCDAB89,
-                   0x98BADCFE,
-                   0x10325476,
-                   0xC3D2E1F0)
+        self._h = (0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0)
 
         # bytes object with 0 <= len < 64 used to store the end of the message
         # if the message length is not congruent to 64
-        self._unprocessed = b''
+        self._unprocessed = b""
 
         # Length in bytes of all data that has been processed so far
         self._msg_byte_len = 0
@@ -159,15 +164,15 @@ class sha1():
         message_len = self._msg_byte_len + len(message)
 
         # add trailing '1' bit (+ 0's padding) to string [FIPS 5.1.1]
-        message += b'\x80'
+        message += b"\x80"
 
         # append 0 <= k < 512 bits '0', so that the resulting message length (in bytes)
         # is congruent to 56 (mod 64)
-        message += b'\x00' * ((56 - (message_len + 1) % 64) % 64)
+        message += b"\x00" * ((56 - (message_len + 1) % 64) % 64)
 
         # append ml, the original message length, as a 64-bit big-endian integer.
         message_bit_length = message_len * 8
-        message += struct.pack(b'>Q', message_bit_length)
+        message += struct.pack(b">Q", message_bit_length)
 
         # Process the final chunk
         h = _hash_computation(message[:64], *self._h)
@@ -205,11 +210,11 @@ class sha1():
         method so far.
 
         """
-        return b''.join(struct.pack(b'>I', h) for h in self._create_digest())
+        return b"".join(struct.pack(b">I", h) for h in self._create_digest())
 
     def hexdigest(self):
         """Like digest() except the digest is returned as a string object of
           double length, containing only hexadecimal digits.
 
         """
-        return ''.join(['%.2x' % i for i in self.digest()])
+        return "".join(["%.2x" % i for i in self.digest()])

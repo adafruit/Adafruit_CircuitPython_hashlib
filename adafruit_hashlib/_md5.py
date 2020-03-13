@@ -1,4 +1,3 @@
-
 # The MIT License (MIT)
 #
 # Brent Rubell for Adafruit Industries, 2019
@@ -27,7 +26,10 @@ MD5 Hash Algorithm.
 * Author(s): Brent Rubell
 """
 # pylint: disable=too-few-public-methods, invalid-name
-class md5():
+class md5:
     """RSA MD5 Algorithm class."""
+
     def __init__(self, s=None):
-        raise NotImplementedError("MD5 digests not currently implemented in this module.")
+        raise NotImplementedError(
+            "MD5 digests not currently implemented in this module."
+        )
