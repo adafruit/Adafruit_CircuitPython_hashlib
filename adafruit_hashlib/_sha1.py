@@ -1,25 +1,8 @@
-# The MIT License (MIT)
+# SPDX-FileCopyrightText: 2013-2015 AJ Alt
+# SPDX-FileCopyrightText: 2019 Brent Rubell for Adafruit Industries
 #
-# Copyright (c) 2013-2015 AJ Alt
-# Modified by Brent Rubell for Adafruit Industries, 2019
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# SPDX-License-Identifier: MIT
+
 """
 `_sha1.py`
 ======================================================
@@ -129,9 +112,7 @@ def _hash_computation(chunk, h0, h1, h2, h3, h4):
 
 # pylint: disable=too-few-public-methods, invalid-name
 class sha1:
-    """SHA-1 Hash Object
-
-    """
+    """SHA-1 Hash Object"""
 
     digest_size = SHA_DIGESTSIZE
     block_size = SHA_BLOCKSIZE
@@ -156,9 +137,7 @@ class sha1:
             self.update(data)
 
     def _create_digest(self):
-        """Returns finalized digest variables for the data processed so far.
-
-        """
+        """Returns finalized digest variables for the data processed so far."""
         # pre-processing
         message = self._unprocessed
         message_len = self._msg_byte_len + len(message)
@@ -214,7 +193,7 @@ class sha1:
 
     def hexdigest(self):
         """Like digest() except the digest is returned as a string object of
-          double length, containing only hexadecimal digits.
+        double length, containing only hexadecimal digits.
 
         """
         return "".join(["%.2x" % i for i in self.digest()])
