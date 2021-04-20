@@ -307,10 +307,10 @@ def sha224_init():
     return sha_info
 
 
-def getbuf(s):
-    if isinstance(s, str):
-        return s.encode("ascii")
-    return bytes(s)
+def getbuf(string):
+    if isinstance(string, str):
+        return string.encode("ascii")
+    return bytes(string)
 
 
 def sha_update(sha_info, buffer):
@@ -320,25 +320,25 @@ def sha_update(sha_info, buffer):
     """
     if isinstance(buffer, str):
         raise TypeError("Unicode strings must be encoded before hashing")
-    count = len(buffer)
+    size = len(buffer)
     buffer_idx = 0
-    clo = (sha_info["count_lo"] + (count << 3)) & 0xFFFFFFFF
+    clo = (sha_info["count_lo"] + (size << 3)) & 0xFFFFFFFF
     if clo < sha_info["count_lo"]:
         sha_info["count_hi"] += 1
     sha_info["count_lo"] = clo
 
-    sha_info["count_hi"] += count >> 29
+    sha_info["count_hi"] += size >> 29
 
     if sha_info["local"]:
         i = SHA_BLOCKSIZE - sha_info["local"]
-        if i > count:
-            i = count
+        if i > size:
+            i = size
 
-        # copy buffer
+        # copy sha buffer
         for x in enumerate(buffer[buffer_idx : buffer_idx + i]):
             sha_info["data"][sha_info["local"] + x[0]] = x[1]
 
-        count -= i
+        size -= i
         buffer_idx += i
 
         sha_info["local"] += i
@@ -348,17 +348,17 @@ def sha_update(sha_info, buffer):
         else:
             return
 
-    while count >= SHA_BLOCKSIZE:
-        # copy buffer
+    while size >= SHA_BLOCKSIZE:
+        # copy sha buffer
         sha_info["data"] = list(buffer[buffer_idx : buffer_idx + SHA_BLOCKSIZE])
-        count -= SHA_BLOCKSIZE
+        size -= SHA_BLOCKSIZE
         buffer_idx += SHA_BLOCKSIZE
         sha_transform(sha_info)
 
-    # copy buffer
+    # copy sha buffer
     pos = sha_info["local"]
-    sha_info["data"][pos : pos + count] = list(buffer[buffer_idx : buffer_idx + count])
-    sha_info["local"] = count
+    sha_info["data"][pos : pos + size] = list(buffer[buffer_idx : buffer_idx + size])
+    sha_info["local"] = size
 
 
 def sha_final(sha_info):
