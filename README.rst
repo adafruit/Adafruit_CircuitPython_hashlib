@@ -68,6 +68,11 @@ Usage Example
         print("Msg Hex Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
                 m.hexdigest(), m.digest_size, m.block_size))
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/hashlib/en/latest/>`_.
+
 Contributing
 ============
 
