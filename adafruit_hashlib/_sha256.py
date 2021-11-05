@@ -331,8 +331,7 @@ def sha_update(sha_info, buffer):
 
     if sha_info["local"]:
         i = SHA_BLOCKSIZE - sha_info["local"]
-        if i > size:
-            i = size
+        i = min(i, size)
 
         # copy sha buffer
         for x in enumerate(buffer[buffer_idx : buffer_idx + i]):
