@@ -7,6 +7,22 @@ import adafruit_hashlib as hashlib
 # Bytes-to-encode
 byte_string = b"CircuitPython"
 
+# Create an MD5 message
+print("--MD5--")
+m = hashlib.md5()
+# Update the hash object with byte_string
+m.update(byte_string)
+# Obtain the digest, digest size, and block size
+print(
+    "Msg Digest: {}\nMsg Digest Size: {}\nMsg Block Size: {}".format(
+        m.hexdigest(), m.digest_size, m.block_size
+    )
+)
+# Validate the digest against CPython3 hashlib-md5
+assert (
+    m.hexdigest() == "6a61334a5d9f848bea9affcd82864819"
+), "Digest does not match expected string."
+
 # Create a SHA-1 message
 print("--SHA1--")
 m = hashlib.sha1()
