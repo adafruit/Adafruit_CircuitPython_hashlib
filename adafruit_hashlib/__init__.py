@@ -24,6 +24,7 @@ Implementation Notes
 """
 try:
     import hashlib
+    # pylint: disable=invalid-name
     md5 = hashlib.md5
     sha1 = hashlib.sha1
     sha224 = hashlib.sha224
