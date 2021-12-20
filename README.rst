@@ -17,7 +17,7 @@ This module implements a common interface to many different secure hash and mess
 Included are the FIPS secure hash algorithms SHA1, SHA224, SHA256, SHA384, and SHA512 (defined in FIPS 180-2)
 as well as RSA’s MD5 algorithm (defined in Internet RFC 1321).
 
-SHA1 and MD5 algorithms are not supported by the CircuitPython module.
+The SHA1 algorithm is not supported by the CircuitPython module.
 
 
 `This library is based on the work performed in the micropython-lib hashlib module by Paul Sokolovsky <https://github.com/micropython/micropython-lib/tree/master/hashlib>`_
