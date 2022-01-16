@@ -23,7 +23,8 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 """
 try:
-    import hashlib
+    from hashlib import md5, sha1, sha224, sha256, sha512
+    from hashlib import sha3_384 as sha384
 except ImportError:
     from adafruit_hashlib._sha256 import sha224, sha256
     from adafruit_hashlib._sha512 import sha384, sha512
