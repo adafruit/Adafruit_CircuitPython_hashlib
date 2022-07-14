@@ -40,6 +40,7 @@ ALGOS_AVAIL = ["sha1", "md5", "sha224", "sha256", "sha384", "sha512"]
 
 def new(algo, data=b""):
     """Creates a new hashlib object.
+
     :param str algo: Name of the desired algorithm.
     :param str data: First parameter.
     """
