@@ -1,7 +1,7 @@
 Introduction
 ============
 
-.. image:: https://readthedocs.org/projects/adafruit-circuitpython-hashlib/badge/?version=latest
+.. image:: https://readthedocs.org/projects/hashlib/badge/?version=latest
     :target: https://docs.circuitpython.org/projects/hashlib/en/latest/
     :alt: Documentation Status
 
