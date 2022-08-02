@@ -13,6 +13,10 @@ Introduction
     :target: https://github.com/adafruit/Adafruit_CircuitPython_hashlib/actions/
     :alt: Build Status
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: Code Style: Black
+
 This module implements a common interface to many different secure hash and message digest algorithms.
 Included are the FIPS secure hash algorithms SHA1, SHA224, SHA256, SHA384, and SHA512 (defined in FIPS 180-2)
 as well as RSA’s MD5 algorithm (defined in Internet RFC 1321).
