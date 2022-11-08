@@ -9,7 +9,7 @@
 SHA-256 Hash Algorithm.
 * Author(s): Tom St Denis, Paul Sokolovsky, Brent Rubell
 """
-# pylint: disable=invalid-name, unnecessary-lambda, missing-docstring
+# pylint: disable=invalid-name, unnecessary-lambda, unnecessary-lambda-assignment, missing-docstring
 
 # SHA Block size and message digest sizes, in bytes.
 SHA_BLOCKSIZE = 64
