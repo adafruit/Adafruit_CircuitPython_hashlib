@@ -43,6 +43,12 @@ Modified for Python3 and CircuitPython by Tim Hawes.
 """
 # pylint: disable=invalid-name,missing-function-docstring,too-many-arguments
 
+try:
+    from typing import Optional, Tuple
+except ImportError:
+    # suppress because typing does not exist on circuitpython
+    pass
+
 import binascii
 import struct
 from micropython import const
@@ -73,26 +79,26 @@ PADDING = b"\x80" + (b"\x00" * 63)
 # F, G, H and I are basic MD5 functions.
 
 
-def F(x, y, z):
+def F(x: int, y: int, z: int) -> int:
     return (x & y) | ((~x) & z)
 
 
-def G(x, y, z):
+def G(x: int, y: int, z: int) -> int:
     return (x & z) | (y & (~z))
 
 
-def H(x, y, z):
+def H(x: int, y: int, z: int) -> int:
     return x ^ y ^ z
 
 
-def I(x, y, z):
+def I(x: int, y: int, z: int) -> int:
     return y ^ (x | (~z))
 
 
 # ROTATE_LEFT rotates x left n bits.
 
 
-def ROTATE_LEFT(x, n):
+def ROTATE_LEFT(x: int, n: int) -> int:
     x = x & 0xFFFFFFFF
     return ((x << n) | (x >> (32 - n))) & 0xFFFFFFFF
 
@@ -101,35 +107,35 @@ def ROTATE_LEFT(x, n):
 # Rotation is separate from addition to prevent recomputation.
 
 
-def FF(a, b, c, d, x, s, ac):
+def FF(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + F(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
     a = a + b
     return a
 
 
-def GG(a, b, c, d, x, s, ac):
+def GG(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + G(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
     a = a + b
     return a
 
 
-def HH(a, b, c, d, x, s, ac):
+def HH(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + H(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
     a = a + b
     return a
 
 
-def II(a, b, c, d, x, s, ac):
+def II(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + I(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
     a = a + b
     return a
 
 
-def encode(data, length):
+def encode(data: Tuple[int], length: int) -> bytes:
     """Encodes input (UINT4) into output (unsigned char). Assumes length is
     a multiple of 4.
     """
@@ -137,7 +143,7 @@ def encode(data, length):
     return struct.pack(*("%iI" % k,) + tuple(data[:k]))
 
 
-def decode(data, length):
+def decode(data: bytes, length: int) -> Tuple[int]:
     """Decodes input (unsigned char) into output (UINT4). Assumes length is
     a multiple of 4.
     """
@@ -152,7 +158,7 @@ class md5:
     block_size = 64
     name = "md5"
 
-    def __init__(self, string=b""):
+    def __init__(self, string: Optional[bytes] = b""):
         """Constructs an MD5 hash object."""
         self.count = 0
         self.buffer = b""
@@ -163,7 +169,7 @@ class md5:
         if string:
             self.update(string)
 
-    def update(self, data):
+    def update(self, data: bytes):
         """Update the hash object with the bytes-like object."""
         data_len = len(data)
 
@@ -231,7 +237,7 @@ class md5:
         new.state = self.state
         return new
 
-    def _transform(self, block):
+    def _transform(self, block: bytes):
         """MD5 basic transformation. Transforms state based on block."""
         # pylint: disable=invalid-name,too-many-statements
         a, b, c, d = self.state

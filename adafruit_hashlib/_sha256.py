@@ -11,6 +11,13 @@ SHA-256 Hash Algorithm.
 """
 # pylint: disable=invalid-name, unnecessary-lambda, unnecessary-lambda-assignment, missing-docstring
 
+try:
+    from typing import Dict, List, Optional, Tuple, Union
+except ImportError:
+    # suppress because typing does not exist on circuitpython
+    pass
+
+
 # SHA Block size and message digest sizes, in bytes.
 SHA_BLOCKSIZE = 64
 SHA_DIGESTSIZE = 32
@@ -42,7 +49,7 @@ Gamma0 = lambda x: (S(x, 7) ^ S(x, 18) ^ R(x, 3))
 Gamma1 = lambda x: (S(x, 17) ^ S(x, 19) ^ R(x, 10))
 
 # pylint: disable=too-many-statements
-def sha_transform(sha_info):
+def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
     W = []
 
     d = sha_info["data"]
@@ -59,7 +66,9 @@ def sha_transform(sha_info):
     ss = sha_info["digest"][:]
 
     # pylint: disable=too-many-arguments, line-too-long
-    def RND(a, b, c, d, e, f, g, h, i, ki):
+    def RND(
+        a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int, i: int, ki: int
+    ) -> Tuple[int, int]:
         """Compress"""
         t0 = h + Sigma1(e) + Ch(e, f, g) + ki + W[i]
         t1 = Sigma0(a) + Maj(a, b, c)
@@ -267,7 +276,7 @@ def sha_transform(sha_info):
     sha_info["digest"] = dig
 
 
-def sha_init():
+def sha_init() -> Dict[str, Union[List[int], int]]:
     """Initialize the SHA digest."""
     sha_info = new_shaobject()
     sha_info["digest"] = [
@@ -287,7 +296,7 @@ def sha_init():
     return sha_info
 
 
-def sha224_init():
+def sha224_init() -> Dict[str, Union[List[int], int]]:
     """Initialize a SHA224 digest."""
     sha_info = new_shaobject()
     sha_info["digest"] = [
@@ -307,13 +316,15 @@ def sha224_init():
     return sha_info
 
 
-def getbuf(string):
+def getbuf(string: Union[str, bytes]) -> bytes:
     if isinstance(string, str):
         return string.encode("ascii")
     return bytes(string)
 
 
-def sha_update(sha_info, buffer):
+def sha_update(
+    sha_info: Dict[str, Union[List[int], int]], buffer: Union[str, bytes]
+) -> None:
     """Update the SHA digest.
     :param dict sha_info: SHA Digest.
     :param str buffer: SHA buffer size.
@@ -360,7 +371,7 @@ def sha_update(sha_info, buffer):
     sha_info["local"] = size
 
 
-def sha_final(sha_info):
+def sha_final(sha_info: Dict[str, Union[List[int], int]]) -> bytes:
     """Finish computing the SHA Digest."""
     lo_bit_count = sha_info["count_lo"]
     hi_bit_count = sha_info["count_hi"]
@@ -401,13 +412,13 @@ class sha256:
     block_size = SHA_BLOCKSIZE
     name = "sha256"
 
-    def __init__(self, s=None):
+    def __init__(self, s: Optional[Union[str, bytes]] = None):
         """Constructs a SHA256 hash object."""
         self._sha = sha_init()
         if s:
             sha_update(self._sha, getbuf(s))
 
-    def update(self, s):
+    def update(self, s: Union[str, bytes]):
         """Updates the hash object with a bytes-like object, s."""
         sha_update(self._sha, getbuf(s))
 
@@ -434,7 +445,7 @@ class sha224(sha256):
     digest_size = digestsize = 28
     name = "sha224"
 
-    def __init__(self, s=None):
+    def __init__(self, s: Optional[Union[str, bytes]] = None):
         """Constructs a SHA224 hash object."""
         self._sha = sha224_init()
         if s:

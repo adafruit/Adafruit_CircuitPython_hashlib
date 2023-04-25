@@ -19,6 +19,13 @@ import struct
 from io import BytesIO
 from micropython import const
 
+try:
+    from typing import Optional, Tuple, Union
+except ImportError:
+    # suppress because typing does not exist on circuitpython
+    pass
+
+
 # SHA Block size and message digest sizes, in bytes.
 SHA_BLOCKSIZE = 64
 SHA_DIGESTSIZE = 20
@@ -30,7 +37,7 @@ K2 = const(0x8F1BBCDC)
 K3 = const(0xCA62C1D6)
 
 
-def _getbuf(data):
+def _getbuf(data: Union[str, bytes]) -> bytes:
     """Converts data into ascii,
     returns bytes of data.
     :param str bytes bytearray data: Data to convert.
@@ -41,7 +48,7 @@ def _getbuf(data):
     return bytes(data)
 
 
-def _left_rotate(n, b):
+def _left_rotate(n: int, b: int) -> int:
     """Left rotate a 32-bit integer, n, by b bits.
     :param int n: 32-bit integer
     :param int b: Desired rotation amount, in bits.
@@ -51,7 +58,9 @@ def _left_rotate(n, b):
 
 
 # pylint: disable=invalid-name, too-many-arguments
-def _hash_computation(chunk, h0, h1, h2, h3, h4):
+def _hash_computation(
+    chunk: bytes, h0: int, h1: int, h2: int, h3: int, h4: int
+) -> Tuple[int, int, int, int, int]:
     """Processes 64-bit chunk of data and returns new digest variables.
     Per FIPS [6.1.2]
     :param bytes bytearray chunk: 64-bit bytearray
@@ -118,7 +127,7 @@ class sha1:
     block_size = SHA_BLOCKSIZE
     name = "sha1"
 
-    def __init__(self, data=None):
+    def __init__(self, data: Optional[Union[str, bytes]] = None):
         """Construct a SHA-1 hash object.
         :param bytes data: Optional data to process
 
@@ -159,7 +168,7 @@ class sha1:
             return h
         return _hash_computation(message[64:], *h)
 
-    def update(self, data):
+    def update(self, data: Optional[Union[str, bytes]]):
         """Updates the hash object with bytes-like object, data.
         :param bytes data: bytearray or bytes object
 
