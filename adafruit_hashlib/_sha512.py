@@ -12,6 +12,13 @@ CPython's sha512module.c.
 """
 # pylint: disable=invalid-name, unnecessary-lambda, unnecessary-lambda-assignment, missing-docstring, line-too-long
 
+try:
+    from typing import Dict, List, Optional, Tuple, Union
+except ImportError:
+    # suppress because typing does not exist on circuitpython
+    pass
+
+
 # SHA Block size and message digest sizes, in bytes.
 SHA_BLOCKSIZE = 128
 SHA_DIGESTSIZE = 64
@@ -43,8 +50,9 @@ Sigma1 = lambda x: (S(x, 14) ^ S(x, 18) ^ S(x, 41))
 Gamma0 = lambda x: (S(x, 1) ^ S(x, 8) ^ R(x, 7))
 Gamma1 = lambda x: (S(x, 19) ^ S(x, 61) ^ R(x, 6))
 
+
 # pylint: disable=protected-access, too-many-statements
-def sha_transform(sha_info):
+def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
     W = []
 
     d = sha_info["data"]
@@ -69,7 +77,9 @@ def sha_transform(sha_info):
     ss = sha_info["digest"][:]
 
     # pylint: disable=line-too-long, too-many-arguments
-    def RND(a, b, c, d, e, f, g, h, i, ki):
+    def RND(
+        a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int, i: int, ki: int
+    ) -> Tuple[int, int]:
         t0 = (h + Sigma1(e) + Ch(e, f, g) + ki + W[i]) & 0xFFFFFFFFFFFFFFFF
         t1 = (Sigma0(a) + Maj(a, b, c)) & 0xFFFFFFFFFFFFFFFF
         d = (d + t0) & 0xFFFFFFFFFFFFFFFF
@@ -324,7 +334,7 @@ def sha_transform(sha_info):
     sha_info["digest"] = dig
 
 
-def sha_init():
+def sha_init() -> Dict[str, Union[List[int], int]]:
     """Initialize the SHA digest."""
     sha_info = new_shaobject()
     sha_info["digest"] = [
@@ -344,7 +354,7 @@ def sha_init():
     return sha_info
 
 
-def sha384_init():
+def sha384_init() -> Dict[str, Union[List[int], int]]:
     """Initialize a SHA384 digest."""
     sha_info = new_shaobject()
     sha_info["digest"] = [
@@ -364,13 +374,15 @@ def sha384_init():
     return sha_info
 
 
-def getbuf(s):
+def getbuf(s: Union[str, bytes]) -> bytes:
     if isinstance(s, str):
         return s.encode("ascii")
     return bytes(s)
 
 
-def sha_update(sha_info, buffer):
+def sha_update(
+    sha_info: Dict[str, Union[List[int], int]], buffer: Union[str, bytes]
+) -> None:
     """Update the SHA digest.
     :param dict sha_info: SHA Digest.
     :param str buffer: SHA buffer size.
@@ -417,7 +429,7 @@ def sha_update(sha_info, buffer):
     sha_info["local"] = count
 
 
-def sha_final(sha_info):
+def sha_final(sha_info: Dict[str, Union[List[int], int]]) -> bytes:
     """Finish computing the SHA Digest."""
     lo_bit_count = sha_info["count_lo"]
     hi_bit_count = sha_info["count_hi"]
@@ -476,13 +488,13 @@ class sha512:
     block_size = SHA_BLOCKSIZE
     name = "sha512"
 
-    def __init__(self, s=None):
+    def __init__(self, s: Optional[Union[str, bytes]] = None):
         """Constructs a SHA512 hash object."""
         self._sha = sha_init()
         if s:
             sha_update(self._sha, getbuf(s))
 
-    def update(self, s):
+    def update(self, s: Union[str, bytes]):
         """Updates the hash object with a bytes-like object, s."""
         sha_update(self._sha, getbuf(s))
 
@@ -509,7 +521,7 @@ class sha384(sha512):
     digest_size = digestsize = 48
     name = "sha384"
 
-    def __init__(self, s=None):
+    def __init__(self, s: Optional[Union[str, bytes]] = None):
         """Constructs a SHA224 hash object."""
         self._sha = sha384_init()
         if s:
