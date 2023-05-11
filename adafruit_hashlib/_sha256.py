@@ -48,6 +48,7 @@ Sigma1 = lambda x: (S(x, 6) ^ S(x, 11) ^ S(x, 25))
 Gamma0 = lambda x: (S(x, 7) ^ S(x, 18) ^ R(x, 3))
 Gamma1 = lambda x: (S(x, 17) ^ S(x, 19) ^ R(x, 10))
 
+
 # pylint: disable=too-many-statements
 def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
     W = []
