@@ -15,8 +15,10 @@ Modified by Brent Rubell, 2019
 
 * Author(s): AJ Alt, Brent Rubell
 """
+
 import struct
 from io import BytesIO
+
 from micropython import const
 
 try:
@@ -57,7 +59,6 @@ def _left_rotate(n: int, b: int) -> int:
     return ((n << b) | (n >> (32 - b))) & 0xFFFFFFFF
 
 
-# pylint: disable=invalid-name, too-many-arguments
 def _hash_computation(
     chunk: bytes, h0: int, h1: int, h2: int, h3: int, h4: int
 ) -> Tuple[int, int, int, int, int]:
@@ -119,7 +120,6 @@ def _hash_computation(
     return h0, h1, h2, h3, h4
 
 
-# pylint: disable=too-few-public-methods, invalid-name
 class sha1:
     """SHA-1 Hash Object"""
 
