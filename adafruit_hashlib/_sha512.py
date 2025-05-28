@@ -10,7 +10,6 @@ SHA-512 Hash Algorithm, this code was ported from
 CPython's sha512module.c.
 * Author(s): Paul Sokolovsky, Brent Rubell
 """
-# pylint: disable=invalid-name, unnecessary-lambda, unnecessary-lambda-assignment, missing-docstring, line-too-long
 
 try:
     from typing import Dict, List, Optional, Tuple, Union
@@ -43,7 +42,7 @@ ROR64 = (
 )
 Ch = lambda x, y, z: (z ^ (x & (y ^ z)))
 Maj = lambda x, y, z: (((x | y) & z) | (x & y))
-S = lambda x, n: ROR64(x, n)
+S = ROR64
 R = lambda x, n: (x & 0xFFFFFFFFFFFFFFFF) >> n
 Sigma0 = lambda x: (S(x, 28) ^ S(x, 34) ^ S(x, 39))
 Sigma1 = lambda x: (S(x, 14) ^ S(x, 18) ^ S(x, 41))
@@ -51,7 +50,6 @@ Gamma0 = lambda x: (S(x, 1) ^ S(x, 8) ^ R(x, 7))
 Gamma1 = lambda x: (S(x, 19) ^ S(x, 61) ^ R(x, 6))
 
 
-# pylint: disable=protected-access, too-many-statements
 def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
     W = []
 
@@ -69,14 +67,10 @@ def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
         )
 
     for i in range(16, 80):
-        W.append(
-            (Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) + W[i - 16])
-            & 0xFFFFFFFFFFFFFFFF
-        )
+        W.append((Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) + W[i - 16]) & 0xFFFFFFFFFFFFFFFF)
 
     ss = sha_info["digest"][:]
 
-    # pylint: disable=line-too-long, too-many-arguments
     def RND(
         a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int, i: int, ki: int
     ) -> Tuple[int, int]:
@@ -380,9 +374,7 @@ def getbuf(s: Union[str, bytes]) -> bytes:
     return bytes(s)
 
 
-def sha_update(
-    sha_info: Dict[str, Union[List[int], int]], buffer: Union[str, bytes]
-) -> None:
+def sha_update(sha_info: Dict[str, Union[List[int], int]], buffer: Union[str, bytes]) -> None:
     """Update the SHA digest.
     :param dict sha_info: SHA Digest.
     :param str buffer: SHA buffer size.
@@ -482,7 +474,6 @@ def sha_final(sha_info: Dict[str, Union[List[int], int]]) -> bytes:
     return bytes(dig)
 
 
-# pylint: disable=protected-access
 class sha512:
     digest_size = digestsize = SHA_DIGESTSIZE
     block_size = SHA_BLOCKSIZE
@@ -516,7 +507,6 @@ class sha512:
         return new
 
 
-# pylint: disable=protected-access, super-init-not-called
 class sha384(sha512):
     digest_size = digestsize = 48
     name = "sha384"

@@ -41,7 +41,6 @@ Modified for Python3 and CircuitPython by Tim Hawes.
 
 * Author(s): RSA Data Security, Olivier Arteau, Tim Hawes
 """
-# pylint: disable=invalid-name,missing-function-docstring,too-many-arguments
 
 try:
     from typing import Optional, Tuple
@@ -51,8 +50,8 @@ except ImportError:
 
 import binascii
 import struct
-from micropython import const
 
+from micropython import const
 
 # Constants
 
@@ -239,7 +238,6 @@ class md5:
 
     def _transform(self, block: bytes):
         """MD5 basic transformation. Transforms state based on block."""
-        # pylint: disable=invalid-name,too-many-statements
         a, b, c, d = self.state
         x = decode(block, md5.block_size)
 
