@@ -205,4 +205,4 @@ class sha1:
         double length, containing only hexadecimal digits.
 
         """
-        return "".join(["%.2x" % i for i in self.digest()])
+        return "".join([f"{i:02x}" for i in self.digest()])

@@ -36,18 +36,17 @@ def new_shaobject():
 
 
 # Various logical functions
-ROR64 = (
-    lambda x, y: (((x & 0xFFFFFFFFFFFFFFFF) >> (y & 63)) | (x << (64 - (y & 63))))
-    & 0xFFFFFFFFFFFFFFFF
+ROR64 = lambda x, y: (
+    (((x & 0xFFFFFFFFFFFFFFFF) >> (y & 63)) | (x << (64 - (y & 63)))) & 0xFFFFFFFFFFFFFFFF
 )
-Ch = lambda x, y, z: (z ^ (x & (y ^ z)))
-Maj = lambda x, y, z: (((x | y) & z) | (x & y))
+Ch = lambda x, y, z: z ^ (x & (y ^ z))
+Maj = lambda x, y, z: ((x | y) & z) | (x & y)
 S = ROR64
 R = lambda x, n: (x & 0xFFFFFFFFFFFFFFFF) >> n
-Sigma0 = lambda x: (S(x, 28) ^ S(x, 34) ^ S(x, 39))
-Sigma1 = lambda x: (S(x, 14) ^ S(x, 18) ^ S(x, 41))
-Gamma0 = lambda x: (S(x, 1) ^ S(x, 8) ^ R(x, 7))
-Gamma1 = lambda x: (S(x, 19) ^ S(x, 61) ^ R(x, 6))
+Sigma0 = lambda x: S(x, 28) ^ S(x, 34) ^ S(x, 39)
+Sigma1 = lambda x: S(x, 14) ^ S(x, 18) ^ S(x, 41)
+Gamma0 = lambda x: S(x, 1) ^ S(x, 8) ^ R(x, 7)
+Gamma1 = lambda x: S(x, 19) ^ S(x, 61) ^ R(x, 6)
 
 
 def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
@@ -498,7 +497,7 @@ class sha512:
         """Like digest() except the digest is returned as a string object of
         double length, containing only hexadecimal digits.
         """
-        return "".join(["%.2x" % i for i in self.digest()])
+        return "".join([f"{i:02x}" for i in self.digest()])
 
     def copy(self):
         """Return a copy (“clone”) of the hash object."""

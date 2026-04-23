@@ -28,9 +28,9 @@ print(
     f"Msg Digest: {m.hexdigest()}\nMsg Digest Size: {m.digest_size}\nMsg Block Size: {m.block_size}"
 )
 # Validate the digest against CPython3 hashlib-sha1
-assert (
-    m.hexdigest() == "62c6e222ccd72f21b8ce0c61f42860d6c70954c0"
-), "Digest does not match expected string."
+assert m.hexdigest() == "62c6e222ccd72f21b8ce0c61f42860d6c70954c0", (
+    "Digest does not match expected string."
+)
 
 
 # Create a SHA-224 message
@@ -43,9 +43,9 @@ print(
     f"Msg Digest: {m.hexdigest()}\nMsg Digest Size: {m.digest_size}\nMsg Block Size: {m.block_size}"
 )
 # Validate the digest against CPython hashlib-sha224
-assert (
-    m.hexdigest() == "744535a10879be6b18bbcdd135032891346f530a7845d580f7869f36"
-), "Digest does not match expected string."
+assert m.hexdigest() == "744535a10879be6b18bbcdd135032891346f530a7845d580f7869f36", (
+    "Digest does not match expected string."
+)
 
 # SHA-256
 print("--SHA256--")
@@ -57,9 +57,9 @@ print(
     f"Msg Digest: {m.hexdigest()}\nMsg Digest Size: {m.digest_size}\nMsg Block Size: {m.block_size}"
 )
 # Validate the digest against CPython hashlib-sha256
-assert (
-    m.hexdigest() == "3ce8334ca39e66afb9c37d571da4caad68ab4a8bcbd6d584f75e4268e36c0954"
-), "Digest does not match expected string."
+assert m.hexdigest() == "3ce8334ca39e66afb9c37d571da4caad68ab4a8bcbd6d584f75e4268e36c0954", (
+    "Digest does not match expected string."
+)
 
 # SHA-384
 print("--SHA384--")

@@ -98,7 +98,7 @@ def I(x: int, y: int, z: int) -> int:
 
 
 def ROTATE_LEFT(x: int, n: int) -> int:
-    x = x & 0xFFFFFFFF
+    x &= 0xFFFFFFFF
     return ((x << n) | (x >> (32 - n))) & 0xFFFFFFFF
 
 
@@ -109,28 +109,28 @@ def ROTATE_LEFT(x: int, n: int) -> int:
 def FF(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + F(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
-    a = a + b
+    a += b
     return a
 
 
 def GG(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + G(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
-    a = a + b
+    a += b
     return a
 
 
 def HH(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + H(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
-    a = a + b
+    a += b
     return a
 
 
 def II(a: int, b: int, c: int, d: int, x: int, s: int, ac: int) -> int:
     a = a + I(b, c, d) + x + ac
     a = ROTATE_LEFT(a, s)
-    a = a + b
+    a += b
     return a
 
 
@@ -139,7 +139,7 @@ def encode(data: Tuple[int], length: int) -> bytes:
     a multiple of 4.
     """
     k = length >> 2
-    return struct.pack(*("%iI" % k,) + tuple(data[:k]))
+    return struct.pack(*(f"{k}I",) + tuple(data[:k]))
 
 
 def decode(data: bytes, length: int) -> Tuple[int]:
@@ -147,7 +147,7 @@ def decode(data: bytes, length: int) -> Tuple[int]:
     a multiple of 4.
     """
     k = length >> 2
-    return struct.unpack("%iI" % k, data[:length])
+    return struct.unpack(f"{k}I", data[:length])
 
 
 class md5:
@@ -176,7 +176,7 @@ class md5:
         index = int(self.count >> 3) & 0x3F
 
         # Update number of bits
-        self.count = self.count + (data_len << 3)
+        self.count += data_len << 3
 
         part_len = md5.block_size - index
 
@@ -187,7 +187,7 @@ class md5:
             i = part_len
             while i + 63 < data_len:
                 self._transform(data[i : i + md5.block_size])
-                i = i + md5.block_size
+                i += md5.block_size
             index = 0
         else:
             i = 0

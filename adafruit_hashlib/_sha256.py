@@ -36,14 +36,14 @@ def new_shaobject():
 
 # Various logical functions
 ROR = lambda x, y: (((x & 0xFFFFFFFF) >> (y & 31)) | (x << (32 - (y & 31)))) & 0xFFFFFFFF
-Ch = lambda x, y, z: (z ^ (x & (y ^ z)))
-Maj = lambda x, y, z: (((x | y) & z) | (x & y))
+Ch = lambda x, y, z: z ^ (x & (y ^ z))
+Maj = lambda x, y, z: ((x | y) & z) | (x & y)
 S = ROR
 R = lambda x, n: (x & 0xFFFFFFFF) >> n
-Sigma0 = lambda x: (S(x, 2) ^ S(x, 13) ^ S(x, 22))
-Sigma1 = lambda x: (S(x, 6) ^ S(x, 11) ^ S(x, 25))
-Gamma0 = lambda x: (S(x, 7) ^ S(x, 18) ^ R(x, 3))
-Gamma1 = lambda x: (S(x, 17) ^ S(x, 19) ^ R(x, 10))
+Sigma0 = lambda x: S(x, 2) ^ S(x, 13) ^ S(x, 22)
+Sigma1 = lambda x: S(x, 6) ^ S(x, 11) ^ S(x, 25)
+Gamma0 = lambda x: S(x, 7) ^ S(x, 18) ^ R(x, 3)
+Gamma1 = lambda x: S(x, 17) ^ S(x, 19) ^ R(x, 10)
 
 
 def sha_transform(sha_info: Dict[str, Union[List[int], int]]) -> None:
@@ -290,7 +290,7 @@ class sha256:
         """Like digest() except the digest is returned as a string object of
         double length, containing only hexadecimal digits.
         """
-        return "".join(["%.2x" % i for i in self.digest()])
+        return "".join([f"{i:02x}" for i in self.digest()])
 
     def copy(self):
         """Return a copy (“clone”) of the hash object."""
